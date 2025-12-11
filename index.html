@@ -117,26 +117,6 @@
       color: #9ca3af;
     }
 
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 11px;
-      padding: 4px 8px;
-      border-radius: 999px;
-      background: rgba(59, 130, 246, 0.14);
-      color: #bfdbfe;
-    }
-
-    .pill {
-      border-radius: 999px;
-      padding: 4px 8px;
-      font-size: 11px;
-      background: rgba(15, 23, 42, 0.8);
-      border: 1px solid rgba(148, 163, 184, 0.3);
-      color: #e5e7eb;
-    }
-
     .btn {
       border: none;
       border-radius: 999px;
@@ -168,23 +148,6 @@
       background: rgba(15, 23, 42, 0.9);
       border: 1px solid rgba(148, 163, 184, 0.2);
       margin-bottom: 16px;
-    }
-
-    .panel-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 10px;
-      gap: 8px;
-    }
-
-    .panel-title {
-      font-size: 16px;
-      font-weight: 600;
-    }
-    .panel-sub {
-      font-size: 11px;
-      color: #9ca3af;
     }
 
     .question-grid {
@@ -227,7 +190,9 @@
 
 <div class="app-shell">
 
-  <!-- 사이드바 -->
+  <!-- ========================== -->
+  <!--       사이드바 영역        -->
+  <!-- ========================== -->
   <aside class="sidebar">
     <div>
       <div class="logo">추억의 상자</div>
@@ -244,28 +209,28 @@
         <div class="stat-label" style="margin-top:6px;">데이터베이스</div>
         <div style="font-size:11px; color:#9ca3af;">
           memorybox2-79787 <br>
-          <span style="color:#60a5fa;">Realtime Database</span> 연결
+          <span style="color:#60a5fa;">Realtime Database</span> 연결됨
         </div>
       </div>
     </div>
   </aside>
 
-  <!-- 메인 -->
+  <!-- ========================== -->
+  <!--         메인 화면          -->
+  <!-- ========================== -->
   <main class="main">
 
     <div class="top-bar">
       <div>
         <div class="top-title">2반 · 추억의 상자</div>
-        <div class="top-sub">1위(2점) / 2위(1점) TOP2 방식</div>
+        <div class="top-sub">1위(2점) / 2위(1점) 방식</div>
       </div>
     </div>
 
     <!-- 참여자 -->
     <section id="view-participant" class="panel">
       <div class="panel-header">
-        <div>
-          <div class="panel-title">참여자 모드</div>
-        </div>
+        <div class="panel-title">참여자 모드</div>
         <button class="btn secondary" onclick="resetParticipantForm()">초기화</button>
       </div>
 
@@ -281,31 +246,27 @@
       <button class="btn" onclick="checkAdmin()">로그인</button>
     </section>
 
-    <!-- 관리자 패널 -->
+    <!-- 관리자 화면 -->
     <section id="view-adminPanel" class="panel" style="display:none;">
       <div class="panel-header">
-        <div>
-          <div class="panel-title">관리자 대시보드 · 2반</div>
-        </div>
+        <div class="panel-title">관리자 대시보드 · 2반</div>
         <div style="display:flex; gap:8px; flex-wrap:wrap;">
           <button class="btn secondary" onclick="refreshData()">새로고침</button>
-          <button class="btn danger" onclick="resetAll()">데이터 초기화</button>
+          <button class="btn danger" onclick="resetAll()">전체 초기화</button>
         </div>
       </div>
 
       <div style="display:grid; grid-template-columns:260px 1fr; gap:14px;">
         <div>
-          <div style="margin-bottom:10px;">
-            <div class="stat-label">총 제출 인원</div>
-            <div style="font-size:22px; font-weight:700;" id="totalVotesAdmin">0</div>
-          </div>
+          <div class="stat-label">총 제출 인원</div>
+          <div id="totalVotesAdmin" style="font-size:22px; font-weight:700;">0</div>
 
-          <label class="stat-label">질문 선택</label>
-          <select id="graphSelect" class="input"></select>
+          <div style="margin-top:14px;">
+            <div class="stat-label">질문 선택</div>
+            <select id="graphSelect" class="input"></select>
 
-          <div style="margin-top:10px;">
-            <button class="btn secondary" onclick="showQuestionResult()">질문별 결과</button>
-            <button class="btn secondary" onclick="showTotal()">전체 합산</button>
+            <button class="btn secondary" style="margin-top:10px;" onclick="showQuestionResult()">질문별 결과</button>
+            <button class="btn secondary" style="margin-top:6px;" onclick="showTotal()">전체 합산</button>
           </div>
         </div>
 
@@ -316,214 +277,289 @@
   </main>
 </div>
 
-<!-- Firebase SDK v8 -->
+<!-- Firebase v8 -->
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
 <script>
-  /* ============================
-      🔥 2반 Firebase 설정
-  =============================*/
-  const firebaseConfig = {
-    apiKey: "AIzaSyCCeHBvXJYSNQJuYVy57jses_g87wQoNhI",
-    authDomain: "memorybox2-79787.firebaseapp.com",
-    databaseURL: "https://memorybox2-79787-default-rtdb.firebaseio.com",
-    projectId: "memorybox2-79787",
-    storageBucket: "memorybox2-79787.firebasestorage.app",
-    messagingSenderId: "1047174228260",
-    appId: "1:1047174228260:web:9c8dd5fb527ab57101abb1",
-    measurementId: "G-RE585WXM2J"
-  };
+/* ===============================
+    🔥 2반 Firebase 설정
+=============================== */
+const firebaseConfig = {
+  apiKey: "AIzaSyCCeHBvXJYSNQJuYVy57jses_g87wQoNhI",
+  authDomain: "memorybox2-79787.firebaseapp.com",
+  databaseURL: "https://memorybox2-79787-default-rtdb.firebaseio.com",
+  projectId: "memorybox2-79787",
+  storageBucket: "memorybox2-79787.firebasestorage.app",
+  messagingSenderId: "1047174228260",
+  appId: "1:1047174228260:web:9c8dd5fb527ab57101abb1",
+  measurementId: "G-RE585WXM2J"
+};
 
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.database();
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
 
-  /* ============================
-      관리자 비번 (2반 전용)
-  =============================*/
-  const ADMIN_PASSWORD = "rhalstnrtjstodslatkfkdgkqslek";
+/* ===============================
+    관리자 비밀번호
+=============================== */
+const ADMIN_PASSWORD = "rhalstnrtjstodslatkfkdgkqslek";
 
-  /* ============================
-      localStorage 키도 반마다 분리!
-  =============================*/
-  const KEY_CLIENT = "memoryBox2_clientId_v1";
-  const KEY_SUBMITTED = "memoryBox2_submitted_v1";
+/* ===============================
+    localStorage Key (2반 전용)
+=============================== */
+const KEY_CLIENT = "memoryBox2_clientId_v1";
+const KEY_SUBMITTED = "memoryBox2_submitted_v1";
 
-  const QUESTIONS = [
-    "청소를 열심히 하던 친구",
-    "도움이 필요할 때 기댈 수 있었던 친구",
-    "학교 행사, 일정 등 전달 사항을 잘 공지해주던 친구",
-    "수업 분위기 조성을 잘 맞춰주던 친구",
-    "힘들 때 웃을 수 있게 해주던 친구",
-    "학교 행사에 열심히 참여하던 친구",
-    "리더십, 카리스마가 넘치던 친구",
-    "봉사활동을 열심히 하던 친구",
-    "사소한 일에도 약속을 잘 지키던 친구",
-    "바른언어, 바른 행동 등 품성이 아름답던 친구"
-  ];
+/* ===============================
+    질문 목록
+=============================== */
+const QUESTIONS = [
+  "청소를 열심히 하던 친구",
+  "도움이 필요할 때 기댈 수 있었던 친구",
+  "학교 행사, 일정 등 전달 사항을 잘 공지해주던 친구",
+  "수업 분위기 조성을 잘 맞춰주던 친구",
+  "힘들 때 웃을 수 있게 해주던 친구",
+  "학교 행사에 열심히 참여하던 친구",
+  "리더십, 카리스마가 넘치던 친구",
+  "봉사활동을 열심히 하던 친구",
+  "사소한 일에도 약속을 잘 지키던 친구",
+  "바른언어, 바른 행동 등 품성이 아름답던 친구"
+];
 
-  let cachedSubmissions = {};
+/* ===============================
+    화면 전환
+=============================== */
+function switchView(view) {
+  document.getElementById("view-participant").style.display =
+    view === "participant" ? "block" : "none";
+  document.getElementById("view-adminLogin").style.display =
+    view === "adminLogin" ? "block" : "none";
+  document.getElementById("view-adminPanel").style.display =
+    view === "adminPanel" ? "block" : "none";
+}
 
-  function switchView(v) {
-    document.getElementById("view-participant").style.display = (v === "participant") ? "block" : "none";
-    document.getElementById("view-adminLogin").style.display = (v === "adminLogin") ? "block" : "none";
-    document.getElementById("view-adminPanel").style.display = (v === "adminPanel") ? "block" : "none";
+/* ===============================
+    Client ID 발급
+=============================== */
+function getClientId() {
+  let id = localStorage.getItem(KEY_CLIENT);
+  if (!id) {
+    id = "client_" + Date.now() + "_" + Math.random().toString(36).substring(2, 10);
+    localStorage.setItem(KEY_CLIENT, id);
   }
+  return id;
+}
 
-  function getClientId() {
-    let id = localStorage.getItem(KEY_CLIENT);
-    if (!id) {
-      id = "client_" + Date.now() + "_" + Math.random().toString(36).substr(2, 9);
-      localStorage.setItem(KEY_CLIENT, id);
-    }
-    return id;
-  }
-
-  function buildQuestionForm() {
-    const box = document.getElementById("questions");
-    box.innerHTML = "";
-    QUESTIONS.forEach((q, i) => {
-      box.innerHTML += `
-        <div class="question-card">
-          <div class="question-label">${i+1}. ${q}</div>
-          <div class="rank-label">1위 (2점)</div>
-          <input id="q${i}_1" class="input">
-          <div class="rank-label">2위 (1점)</div>
-          <input id="q${i}_2" class="input">
-        </div>
-      `;
-    });
-  }
-
-  function resetParticipantForm() {
-    buildQuestionForm();
-  }
-
-  function submitVotes() {
-    if (localStorage.getItem(KEY_SUBMITTED) === "yes") {
-      alert("이미 제출한 기기입니다.");
-      return;
-    }
-
-    const clientId = getClientId();
-    const submission = {};
-
-    QUESTIONS.forEach((_, qi) => {
-      const first = document.getElementById(`q${qi}_1`).value.trim();
-      const second = document.getElementById(`q${qi}_2`).value.trim();
-
-      submission[qi] = {};
-
-      if (first) submission[qi][first] = 2;
-      if (second && second !== first) submission[qi][second] = 1;
-    });
-
-    db.ref("submissions/" + clientId).set(submission).then(() => {
-      localStorage.setItem(KEY_SUBMITTED, "yes");
-      alert("제출되었습니다!");
-      refreshData();
-      resetParticipantForm();
-    });
-  }
-
-  function checkAdmin() {
-    const pw = document.getElementById("adminPW").value;
-    if (pw === ADMIN_PASSWORD) {
-      switchView("adminPanel");
-      refreshData();
-      buildGraphSelector();
-    } else {
-      alert("비밀번호가 틀렸습니다");
-    }
-  }
-
-  function refreshData() {
-    db.ref("submissions").once("value").then(snapshot=>{
-      cachedSubmissions = snapshot.val() || {};
-      const count = Object.keys(cachedSubmissions).length;
-      document.getElementById("totalVotes").innerText = count;
-      document.getElementById("totalVotesAdmin").innerText = count;
-    });
-  }
-
-  function buildGraphSelector() {
-    const sel = document.getElementById("graphSelect");
-    sel.innerHTML = "";
-    QUESTIONS.forEach((q, i)=>{
-      sel.innerHTML += `<option value="${i}">${i+1}. ${q}</option>`;
-    });
-  }
-
-  function computeQuestionStats(index) {
-    const stats = {};
-    Object.values(cachedSubmissions).forEach(sub=>{
-      const qData = sub[index];
-      if (!qData) return;
-      Object.entries(qData).forEach(([name,score])=>{
-        if (!stats[name]) stats[name] = 0;
-        stats[name] += score;
-      });
-    });
-    return stats;
-  }
-
-  function showQuestionResult() {
-    const idx = Number(document.getElementById("graphSelect").value);
-    const stats = computeQuestionStats(idx);
-    const box = document.getElementById("resultBox");
-
-    if (!Object.keys(stats).length) {
-      box.textContent = "아직 데이터가 없습니다.";
-      return;
-    }
-
-    const sorted = Object.entries(stats).sort((a,b)=>b[1]-a[1]);
-    let text = `📌 ${idx+1}. ${QUESTIONS[idx]}\n\n`;
-    sorted.forEach(([name,score],i)=> text += `${i+1}위 · ${name}: ${score}점\n`);
-    box.textContent = text;
-  }
-
-  function showTotal() {
-    const total = {};
-    Object.values(cachedSubmissions).forEach(sub=>{
-      Object.values(sub).forEach(q=>{
-        Object.entries(q).forEach(([name,score])=>{
-          if (!total[name]) total[name] = 0;
-          total[name] += score;
-        });
-      });
-    });
-
-    const box = document.getElementById("resultBox");
-    if (!Object.keys(total).length) {
-      box.textContent = "데이터 없음";
-      return;
-    }
-
-    const sorted = Object.entries(total).sort((a,b)=>b[1]-a[1]);
-    let text = "📌 전체 합산\n\n";
-    sorted.forEach(([name,score],i)=> text += `${i+1}위 · ${name}: ${score}점\n`);
-    box.textContent = text;
-  }
-
-  function resetAll() {
-    if (!confirm("정말 초기화할까요?")) return;
-
-    db.ref("submissions").set(null).then(()=>{
-      localStorage.removeItem(KEY_CLIENT);
-      localStorage.removeItem(KEY_SUBMITTED);
-      refreshData();
-      alert("전체 데이터 초기화 완료");
-    });
-  }
-
-  // 초기 실행
-  window.addEventListener("DOMContentLoaded", () => {
-    buildQuestionForm();
-    refreshData();
-    switchView("participant");
+/* ===============================
+    질문 UI 생성
+=============================== */
+function buildQuestionForm() {
+  const box = document.getElementById("questions");
+  box.innerHTML = "";
+  QUESTIONS.forEach((q, i) => {
+    box.innerHTML += `
+      <div class="question-card">
+        <div>${i + 1}. ${q}</div>
+        <div style="margin-top:4px; font-size:12px;">1위 (2점)</div>
+        <input id="q${i}_1" class="input">
+        <div style="margin-top:6px; font-size:12px;">2위 (1점)</div>
+        <input id="q${i}_2" class="input">
+      </div>
+    `;
   });
+}
+
+function resetParticipantForm() {
+  buildQuestionForm();
+}
+
+/* ===========================================================
+    🔥 이름 자동 통합 함수 (지훈=이지훈 / 길동=홍길동 등)
+=========================================================== */
+function normalizeName(name, existingNames) {
+  if (!name) return "";
+
+  // 기본 정리(공백/호칭 제거)
+  name = name.trim().replace(/\s+/g, "").replace(/(이|야|님|군|양|씨|요)$/g, "");
+
+  // 기존 DB의 이름들과 비교하여 동일 인물 자동 통합
+  for (let saved of existingNames) {
+    if (!saved) continue;
+    if (saved.includes(name) || name.includes(saved)) {
+      return saved; // 동일 인물로 취급
+    }
+  }
+
+  return name;
+}
+
+/* ===========================================================
+    🔥 투표 제출 (이름 자동 통합 포함)
+=========================================================== */
+async function submitVotes() {
+  if (localStorage.getItem(KEY_SUBMITTED) === "yes") {
+    alert("이미 제출한 기기입니다.");
+    return;
+  }
+
+  const clientId = getClientId();
+
+  // 기존 DB → 모든 이름 수집
+  const snap = await db.ref("submissions").get();
+  let existingNames = new Set();
+
+  snap.forEach(child => {
+    Object.values(child.val()).forEach(q => {
+      Object.keys(q).forEach(name => existingNames.add(name));
+    });
+  });
+
+  const submission = {};
+
+  QUESTIONS.forEach((_, qi) => {
+    let first = document.getElementById(`q${qi}_1`).value;
+    let second = document.getElementById(`q${qi}_2`).value;
+
+    // 🔥 자동 이름 정규화 적용
+    first = normalizeName(first, existingNames);
+    second = normalizeName(second, existingNames);
+
+    // 다음 질문에서도 매칭되도록 저장
+    if (first) existingNames.add(first);
+    if (second) existingNames.add(second);
+
+    submission[qi] = {};
+    if (first) submission[qi][first] = 2;
+    if (second && second !== first) submission[qi][second] = 1;
+  });
+
+  await db.ref("submissions/" + clientId).set(submission);
+  localStorage.setItem(KEY_SUBMITTED, "yes");
+
+  alert("제출되었습니다!");
+  refreshData();
+  resetParticipantForm();
+}
+
+/* ===============================
+    관리자 기능
+=============================== */
+function checkAdmin() {
+  if (document.getElementById("adminPW").value === ADMIN_PASSWORD) {
+    switchView("adminPanel");
+    refreshData();
+    buildGraphSelector();
+  } else {
+    alert("비밀번호가 틀렸습니다.");
+  }
+}
+
+function refreshData() {
+  db.ref("submissions").once("value").then(snapshot => {
+    cachedSubmissions = snapshot.val() || {};
+    const count = Object.keys(cachedSubmissions).length;
+    document.getElementById("totalVotes").innerText = count;
+    document.getElementById("totalVotesAdmin").innerText = count;
+  });
+}
+
+function buildGraphSelector() {
+  const sel = document.getElementById("graphSelect");
+  sel.innerHTML = "";
+  QUESTIONS.forEach((q, i) => {
+    sel.innerHTML += `<option value="${i}">${i + 1}. ${q}</option>`;
+  });
+}
+
+/* ===============================
+    질문별 결과
+=============================== */
+function computeQuestionStats(index) {
+  const stats = {};
+  Object.values(cachedSubmissions).forEach(sub => {
+    const qData = sub[index];
+    if (!qData) return;
+    Object.entries(qData).forEach(([name, score]) => {
+      if (!stats[name]) stats[name] = 0;
+      stats[name] += score;
+    });
+  });
+  return stats;
+}
+
+function showQuestionResult() {
+  const idx = Number(document.getElementById("graphSelect").value);
+  const stats = computeQuestionStats(idx);
+  const box = document.getElementById("resultBox");
+
+  if (!Object.keys(stats).length) {
+    box.textContent = "아직 데이터 없음";
+    return;
+  }
+
+  const sorted = Object.entries(stats).sort((a, b) => b[1] - a[1]);
+  let text = `📌 ${idx + 1}. ${QUESTIONS[idx]}\n\n`;
+  sorted.forEach(([name, score], i) => {
+    text += `${i + 1}위 · ${name}: ${score}점\n`;
+  });
+
+  box.textContent = text;
+}
+
+/* ===============================
+    전체 합산 결과
+=============================== */
+function showTotal() {
+  const total = {};
+  Object.values(cachedSubmissions).forEach(sub => {
+    Object.values(sub).forEach(q => {
+      Object.entries(q).forEach(([name, score]) => {
+        if (!total[name]) total[name] = 0;
+        total[name] += score;
+      });
+    });
+  });
+
+  const box = document.getElementById("resultBox");
+
+  if (!Object.keys(total).length) {
+    box.textContent = "데이터 없음";
+    return;
+  }
+
+  const sorted = Object.entries(total).sort((a, b) => b[1] - a[1]);
+  let text = "📌 전체 합산 결과\n\n";
+  sorted.forEach(([name, score], i) => {
+    text += `${i + 1}위 · ${name}: ${score}점\n`;
+  });
+
+  box.textContent = text;
+}
+
+/* ===============================
+    전체 초기화 (재투표 가능)
+=============================== */
+function resetAll() {
+  if (!confirm("정말 초기화하시겠습니까?")) return;
+
+  db.ref("submissions").set(null).then(() => {
+    localStorage.removeItem(KEY_CLIENT);
+    localStorage.removeItem(KEY_SUBMITTED);
+    refreshData();
+    alert("전체 데이터 초기화 완료");
+  });
+}
+
+/* ===============================
+    초기 실행
+=============================== */
+window.addEventListener("DOMContentLoaded", () => {
+  buildQuestionForm();
+  refreshData();
+  switchView("participant");
+});
 </script>
 
 </body>
 </html>
+
